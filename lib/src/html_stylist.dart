@@ -28,8 +28,8 @@ class HTML {
   /// as its argument.
 
   static TextSpan toTextSpan(BuildContext context, String htmlContent,
-      {Function linksCallback = defaultLinksCallback}) {
-    Parser p = Parser(context, htmlContent, linksCallback: linksCallback);
+      {Function linksCallback = defaultLinksCallback, TextStyle? defaultStyle}) {
+    Parser p = Parser(context, htmlContent, linksCallback: linksCallback, defaultStyle: defaultStyle);
     return TextSpan(text: "", children: p.parse());
   }
 
@@ -39,8 +39,8 @@ class HTML {
   /// click events on anchor tags. The function will receive the actual link
   /// as its argument.
   static RichText toRichText(BuildContext context, String htmlContent,
-      {Function linksCallback = defaultLinksCallback}) {
+      {Function linksCallback = defaultLinksCallback, TextStyle? defaultStyle}) {
     return RichText(
-        text: toTextSpan(context, htmlContent, linksCallback: linksCallback));
+        text: toTextSpan(context, htmlContent, linksCallback: linksCallback, defaultStyle: defaultStyle));
   }
 }

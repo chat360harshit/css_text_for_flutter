@@ -36,18 +36,20 @@ class Parser {
   var _events;
   late BuildContext _context;
   late Function _linksCallback;
+  late TextStyle? _defaultStyle; 
 
   Parser(BuildContext context, String data,
-      {Function linksCallback = defaultLinksCallback}) {
+      {Function linksCallback = defaultLinksCallback,TextStyle? defaultStyle}) {
     _events = xmle.parseEvents(data);
     _context = context;
     _linksCallback = linksCallback;
+    _defaultStyle =defaultStyle; 
   }
 
   TextSpan _getTextSpan(text, style) {
     var rules = style.split(";").where((item) => !item.trim().isEmpty);
     TextStyle textStyle = DefaultTextStyle.of(_context).style;
-    textStyle = textStyle.apply(color: Color(0xff000000));
+    textStyle =_defaultStyle ?? textStyle;
     var isLink = false;
     var link = "";
     rules.forEach((String rule) {
@@ -172,7 +174,7 @@ class Parser {
     });
 
     // for the last p tag
-    if (spans[spans.length - 1].text == '\n') {
+    if (spans.isNotEmpty && spans[spans.length - 1].text == '\n') {
       spans.removeLast();
     }
     return spans;
