@@ -40,6 +40,7 @@ class Parser {
 
   Parser(BuildContext context, String data,
       {Function linksCallback = defaultLinksCallback,TextStyle? defaultStyle}) {
+        data = data.replaceAll("&nbsp;", " ");
     _events = xmle.parseEvents(data);
     _context = context;
     _linksCallback = linksCallback;
